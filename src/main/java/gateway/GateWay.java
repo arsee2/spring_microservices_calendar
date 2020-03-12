@@ -7,10 +7,13 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.cloud.gateway.route.RouteLocator;
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class GateWay {
     @Bean
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("calendar",r -> r.path("/calendar/date").filters(f -> f.setPath("/date"))
@@ -24,6 +27,8 @@ public class GateWay {
 
                 .build();
     }
+
+    
     public static void main(String[] args) {
 
         SpringApplication.run(GateWay.class, args);
